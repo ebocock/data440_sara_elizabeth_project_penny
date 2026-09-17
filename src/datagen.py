@@ -34,10 +34,10 @@ def make_decks(seed: int,
 
 
 def get_next_seed() -> int:
-    #
+    '''
     #Read the last seed used, increment by 1,
     #and update seed.json.
-    #
+    '''
     # Ensure the parent directory(ies) exists
     PATH_SEED_LOG.parent.mkdir(parents=True, exist_ok=True)
 
