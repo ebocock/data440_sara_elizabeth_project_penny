@@ -10,21 +10,29 @@ PATH_SEED_LOG = Path('data/seed.json')
 SEED_BASE = 1693
 
 def make_decks(seed: int, 
-               n_cards: int
+               n_cards: int,
+               n_decks: int
               ) -> np.ndarray:
     '''
-    This code makes one deck and shuffles it.
+    This code makes and shuffles the decks.
     '''
     rng = np.random.default_rng(seed)
-    num_each_card = n_cards/2
+    num_each_card = n_cards // 2
 
-    unshuffled = np.concatenate([np.zeros(num_each_card, dtype=int), np.ones(num_each_card, dtype=int)])
-    shuffled = rng.shuffle(unshuffled)
-    return shuffled
+    decks = np.empty((n_decks, n_cards), dtype = np.int8)
+
+    for i in range(n_decks):
+        deck = np.concatenate([
+            np.zeros(num_each_card, dtype = np.int8),
+            np.ones(num_each_card, dtype = np.int8)
+        ])
+        rng.shuffle(deck)
+
+        decks[i] = deck
+    
+    return decks
 
 
-
-'''
 def get_next_seed() -> int:
     #
     #Read the last seed used, increment by 1,
@@ -45,27 +53,44 @@ def get_next_seed() -> int:
     # Update the log
     seed_log = {
         'seed': seed,
-        'seed_time': str(dt.now())
+        'seed_time': str(dt.datetime.now())
     }
     with PATH_SEED_LOG.open('w') as f:
         json.dump(seed_log, f)
     
     return seed
 
+
+
 def save_decks(decks: np.ndarray, 
                seed: int
               ) -> Path:
-    #
-    This doesn't actually save anything,
-    it is just a demo of how I might construct
-    the filename.
-    #
+    '''
+    Saves all decks from one simulation call to one file.
+    '''
     PATH_DECKS.mkdir(parents=True, exist_ok=True)
 
     n_decks = decks.shape[0]
     n_cards = decks.shape[1]
 
-    filename = PATH_DECKS / f'decks_{n_decks}x{n_cards}_seed_{seed}.something'
-    print(f'I might save this file like: {filename}')
-    return filename
-'''
+    filename = PATH_DECKS / f'decks_{n_decks}x{n_cards}_seed_{seed}.npy'
+    filepath = f'{PATH_DECKS}/{filename}'
+
+    np.save(filepath, decks)
+
+    return filepath
+
+
+def generate_decks(n_cards, n_decks):
+    seed = get_next_seed()
+
+    decks = make_decks(
+        seed = seed,
+        n_decks = n_decks,
+        n_cards = n_cards
+    )
+
+    save_decks(
+        decks = decks,
+        seed = seed
+    )
