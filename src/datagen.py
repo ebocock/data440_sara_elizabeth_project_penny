@@ -35,8 +35,8 @@ def make_decks(seed: int,
 
 def get_next_seed() -> int:
     '''
-    #Read the last seed used, increment by 1,
-    #and update seed.json.
+    Read the last seed used, increment by 1,
+    and update seed.json.
     '''
     # Ensure the parent directory(ies) exists
     PATH_SEED_LOG.parent.mkdir(parents=True, exist_ok=True)
@@ -74,11 +74,11 @@ def save_decks(decks: np.ndarray,
     n_cards = decks.shape[1]
 
     filename = PATH_DECKS / f'decks_{n_decks}x{n_cards}_seed_{seed}.npy'
-    filepath = f'{PATH_DECKS}/{filename}'
+    #filepath = PATH_DECKS / filename 
 
-    np.save(filepath, decks)
+    np.save(filename, decks)
 
-    return filepath
+    return filename
 
 
 def generate_decks(n_cards, n_decks):
@@ -90,7 +90,8 @@ def generate_decks(n_cards, n_decks):
         n_cards = n_cards
     )
 
-    save_decks(
+    filepath = save_decks(
         decks = decks,
         seed = seed
     )
+    return decks, seed, filepath
