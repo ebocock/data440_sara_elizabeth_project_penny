@@ -74,7 +74,6 @@ def save_decks(decks: np.ndarray,
     n_cards = decks.shape[1]
 
     filename = PATH_DECKS / f'decks_{n_decks}x{n_cards}_seed_{seed}.npy'
-    #filepath = PATH_DECKS / filename 
 
     np.save(filename, decks)
 
