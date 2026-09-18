@@ -80,7 +80,7 @@ def save_decks(decks: np.ndarray,
     return filename
 
 
-def generate_decks(n_cards, n_decks):
+def generate_decks(n_cards: int, n_decks: int):
     seed = get_next_seed()
 
     decks = make_decks(
