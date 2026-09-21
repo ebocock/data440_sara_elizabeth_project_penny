@@ -83,9 +83,6 @@ def play_n_score(deck_array, og_wins_grid, ron_wins_grid, counter_grid, combos) 
 
     return
 
-decks, seed, filepath = generate_decks(n_cards=52, n_decks=1000) #generates 1000 decks to start with 
-print(len(decks), "decks created using seed number",seed, "with filepath", filepath)
-
 combos = ["BRR", "BRB", "BBR", "BBB", "RRR","RRB","RBR","RBB"] #all possible combos, listed to record for results tracking
 
 #below generates grid to record wins and games
