@@ -94,3 +94,21 @@ def generate_decks(n_cards: int, n_decks: int):
         seed = seed
     )
     return decks, seed, filepath
+
+def main():
+    # Generates 1 million decks
+    n_cards = 52
+    n_decks = 1000000
+
+    # Generate decks
+    decks, seed, filepath = generate_decks(
+        n_cards=n_cards,
+        n_decks=n_decks
+    )
+
+    # Print results
+    print(f"Seed: {seed}")
+    print(f"Saved to: {filepath}")
+
+if __name__ == "__main__":
+    main()
