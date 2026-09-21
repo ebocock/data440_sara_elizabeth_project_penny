@@ -98,7 +98,7 @@ def generate_decks(n_cards: int, n_decks: int):
 def main():
     # Generates 1 million decks
     n_cards = 52
-    n_decks = 1000000
+    n_decks = 100
 
     # Generate decks
     decks, seed, filepath = generate_decks(
