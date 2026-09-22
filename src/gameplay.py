@@ -17,7 +17,7 @@ def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns st
 
   return deck_string #return string
 
-def run_og_game(deck, mychoice, oppchoice ) -> int: #HN version of the game, scores by tricks 
+def run_og_game(deck, mychoice, oppchoice ) -> str: #HN version of the game, scores by tricks 
   mytricks=0 #tracks the number of tricks ive won
   opptricks=0 # tracks the number of tricks opponent has won
 
@@ -34,12 +34,15 @@ def run_og_game(deck, mychoice, oppchoice ) -> int: #HN version of the game, sco
       opptricks+=1
       drawn = ""
 
-  if mytricks >= opptricks: #if my trick number wins or ties i win the game
-   return 1 
+  if mytricks > opptricks: #if my trick number wins i win the game
+   return "win" 
+  elif mytricks ==opptricks:
+    return "tie"
   else:
-    return 0
+    return "loss"
 
-def run_ron_game(deck, mychoice, oppchoice ) -> int: #rons version of the game, scored by won cards
+
+def run_ron_game(deck, mychoice, oppchoice) -> str: #rons version of the game, scored by won cards
   mycards =0 #tracks the number of tricks ive won
   oppcards=0 # tracks the number of tricks opponent has won
 
@@ -56,41 +59,55 @@ def run_ron_game(deck, mychoice, oppchoice ) -> int: #rons version of the game, 
       oppcards+= len(drawn) # whole pile awarded to opponennt
       drawn = ""
 
-  if mycards >= oppcards: # if i win or tie i win the game
-   return 1
+  if mycards > oppcards: # if i win or tie i win the game
+   return "win"
+  elif mycards == oppcards:
+    return "tie"
   else:
-    return 0
+    return "loss"
 
 
-def play_n_score(deck_array, og_wins_grid, ron_wins_grid, counter_grid, combos) -> None:
-    card_colors = "BR" 
+def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_grid, counter_grid, combos) -> None:
     
     deck_string = convert_deck(deck_array)
 
-    mychoice= "".join(random.choices(card_colors, k=3))
-    oppchoice= "".join(random.choices(card_colors, k=3))
+    for mychoice in combos:
+      for oppchoice in combos:
 
-    if mychoice != oppchoice:
-      og_outcome = run_og_game(deck_string, mychoice, oppchoice)
-      ron_outcome = run_ron_game(deck_string, mychoice, oppchoice)
+        if mychoice != oppchoice:
+          og_outcome = run_og_game(deck_string, mychoice, oppchoice)
+          ron_outcome = run_ron_game(deck_string, mychoice, oppchoice)
 
+# consulted Claude for logic/structure of below 11 lines
+          m = combos.index(mychoice)
+          o = combos.index(oppchoice)
+          counter_grid[m,o] += 1
 
-      m = combos.index(mychoice)
-      o = combos.index(oppchoice)
-      counter_grid[m,o] += 1
-      og_wins_grid[m,o] += og_outcome
-      ron_wins_grid[m,o] += ron_outcome
+          if og_outcome == "win":
+            og_wins_grid[m,o] += 1
+          elif og_outcome == "tie":
+            og_ties_grid[m,o] += 1
+
+          if ron_outcome == "win":
+            ron_wins_grid[m,o] += 1
+          elif ron_outcome == "tie":
+            ron_tie_grid[m,o] += 1
 
     return
 
 combos = ["BRR", "BRB", "BBR", "BBB", "RRR","RRB","RBR","RBB"] #all possible combos, listed to record for results tracking
 
+# source consulted for below chunk: https://www.geeksforgeeks.org/python/create-a-numpy-array-filled-with-all-zeros-python/
 #below generates grid to record wins and games
 og_wins_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
+og_ties_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
 ron_wins_grid = np.zeros((8,8)) #for ron game
+ron_tie_grid = np.zeros((8,8)) #for ron game
 counter_grid = np.zeros((8,8)) #all games
 
 
+decks,seed,filepath = generate_decks(n_cards = 52, n_decks=1000) #1000 to start with
+
 for deck_array in decks: #play the games for every deck
-  play_n_score(deck_array,og_wins_grid,ron_wins_grid,counter_grid, combos) 
+  play_n_score(deck_array,og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid, combos) 
 
