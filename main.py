@@ -1,7 +1,6 @@
 #imports
 from src.datagen import more_decks()
 from src.datavis import display_heatmaps
-import matplotlib.pyplot as plt
 
 # Process the n more decks
 def process_cards():
@@ -9,7 +8,7 @@ def process_cards():
 
 
 # Main
-if __name__ == '__main__':
+def main():
     print('Welcome to the Project Penny Simulation')
     first_action = input('Type 0 to display the most up-to-date heatmaps,\n type\n' \
     'Type 1 to generate more decks.')
@@ -26,3 +25,6 @@ if __name__ == '__main__':
             heatmap_q = input(f'Just processed {n_decks}, input 0 to display updated heatmaps.')
             if heatmap_q == '0':
                 display_heatmaps()
+
+if __name__ == "__main__":
+    main()

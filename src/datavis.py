@@ -4,15 +4,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #generate some dummy data
-regular_wins = np.random.rand(8, 8)
-ron_wins = np.random.rand(8,8)
-regular_ties = np.random.rand(8,8)
-ron_ties = np.random.rand(8,8)
-n_decks = 100000
+# regular_wins = np.random.rand(8, 8)
+# ron_wins = np.random.rand(8,8)
+# regular_ties = np.random.rand(8,8)
+# ron_ties = np.random.rand(8,8)
+# n_decks = 100000
 
 #function to get the data
 def get_data():
-    return regular_wins, ron_wins, regular_ties, ron_ties
+    with np.load('probabilities.npz') as probabilities:
+        print(probabilities)
+        #return regular_wins, ron_wins, regular_ties, ron_ties
 
 #function to make visualization, generic 
 def make_visualization(wins, ties, n_decks):
@@ -69,11 +71,7 @@ def display_heatmaps():
 
 #function to show visualization
 def main():
-    regular_wins, ron_wins, regular_ties, ron_ties = get_data()
-    fig = make_visualization(ron_wins,
-                       ron_ties,
-                       n_decks)
-    plt.show()
+    get_data()
 
 if __name__ == "__main__":
     main()
