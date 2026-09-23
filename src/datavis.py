@@ -52,6 +52,7 @@ def make_visualization(wins, ties, n_decks):
     ax.set_ylabel('Opponent Choice')
     ax.set_title(f'Probability of Win(Tie)\n{title}\nScored by {score}\n N = {n_decks}')
     plt.tight_layout()
+    fig.savefig(f'figures/{title}_{n_decks}heatmap.png', dpi=300, bbox_inches='tight')
     return fig
 
 
@@ -61,7 +62,6 @@ def main():
     fig = make_visualization(ron_wins,
                        ron_ties,
                        n_decks)
-    fig.savefig('figures/heatmap.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 if __name__ == "__main__":
