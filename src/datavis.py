@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 #function to get the data
 def get_data():
-    with np.load('probabilities.npz') as probabilities:
+    with np.load('data/score_records/probabilities.npz') as probabilities:
         print(probabilities)
         #return regular_wins, ron_wins, regular_ties, ron_ties
 
