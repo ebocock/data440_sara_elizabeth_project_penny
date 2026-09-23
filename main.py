@@ -1,5 +1,5 @@
 #imports
-from src.datagen import more_decks()
+from src.datagen import more_decks
 from src.datavis import display_heatmaps
 
 # Process the n more decks

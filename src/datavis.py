@@ -56,7 +56,7 @@ def make_visualization(wins, ties, n_decks, title, score):
     return fig
 
 # wrapper functions so that we can keep the make visualizations vague but still make title changes
-# I used claude to help me make these
+# I used chatgpt to help me make these
 def make_regular_visualization(wins, ties, n_decks):
     title = 'H-N Game'
     score = 'tricks'
