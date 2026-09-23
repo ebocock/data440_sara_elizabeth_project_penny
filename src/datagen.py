@@ -99,7 +99,7 @@ def more_decks(n):
     print(f'Creating {n} more decks')
     decks, seed, filepath = generate_decks(52, n)
     print(f'{n} decks saved to {filepath}.')
-    return
+    return filepath
 
 def main():
     # Generates 1 million decks
