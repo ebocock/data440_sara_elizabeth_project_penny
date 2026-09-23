@@ -11,16 +11,16 @@ import matplotlib.pyplot as plt
 # n_decks = 100000
 
 #function to get the data
-def get_data():
+def get_data()-> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     with np.load('data/score_records/probabilities.npz') as probabilities:
         regular_wins = probabilities['percent_og_wins']
         regular_ties = probabilities['percent_og_ties']
         ron_wins = probabilities['percent_ron_wins']
         ron_ties = probabilities['percent_ron_ties']
-        #return regular_wins, ron_wins, regular_ties, ron_ties
+    return regular_wins, ron_wins, regular_ties, ron_ties
 
 #function to make visualization, generic 
-def make_visualization(wins, ties, n_decks, title, score):
+def make_visualization(wins: np.ndarray, ties: np.ndarray, n_decks: int, title: str, score: str) -> plt.Figure:
     # create the diagonal mask so the invalid games can be grey
     mask = np.eye(wins.shape[0])
 
@@ -57,18 +57,18 @@ def make_visualization(wins, ties, n_decks, title, score):
 
 # wrapper functions so that we can keep the make visualizations vague but still make title changes
 # I used chatgpt to help me make these
-def make_regular_visualization(wins, ties, n_decks):
+def make_regular_visualization(wins: np.ndarray, ties: np.ndarray , n_decks:int)-> plt.Figure:
     title = 'H-N Game'
     score = 'tricks'
     return make_visualization(wins, ties, n_decks, title, score)
 
 
-def make_ron_visualization(wins, ties, n_decks):
+def make_ron_visualization(wins: np.ndarray, ties: np.ndarray , n_decks:int)-> plt.Figure:
     title = "Ron's Variation"
     score = 'cards'
     return make_visualization(wins, ties, n_decks, title, score)
 
-def display_heatmaps():
+def display_heatmaps()-> None:
     # get data
     regular_wins, ron_wins, regular_ties, ron_ties = get_data()
     # make regular heatmap

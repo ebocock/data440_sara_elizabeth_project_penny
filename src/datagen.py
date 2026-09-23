@@ -80,7 +80,7 @@ def save_decks(decks: np.ndarray,
     return filename
 
 
-def generate_decks(n_cards: int, n_decks: int):
+def generate_decks(n_cards: int, n_decks: int) -> tuple[np.ndarray, int, str]:
     seed = get_next_seed()
 
     decks = make_decks(
@@ -95,7 +95,7 @@ def generate_decks(n_cards: int, n_decks: int):
     )
     return decks, seed, filepath
 
-def more_decks(n):
+def more_decks(n: int) -> str:
     print(f'Creating {n} more decks')
     decks, seed, filepath = generate_decks(52, n)
     print(f'{n} decks saved to {filepath}.')
