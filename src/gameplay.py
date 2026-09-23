@@ -1,6 +1,7 @@
 import numpy as np 
 import random
 from datagen import generate_decks #import deck generation from src
+from record_storing import save_result_counts, save_probabilities
 
 
 def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns string
@@ -110,4 +111,9 @@ decks,seed,filepath = generate_decks(n_cards = 52, n_decks=1000) #1000 to start 
 
 for deck_array in decks: #play the games for every deck
   play_n_score(deck_array,og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid, combos) 
+
+save_result_counts(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid)
+save_probabilities(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid)
+
+
 
