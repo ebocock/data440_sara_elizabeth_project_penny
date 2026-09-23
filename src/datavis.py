@@ -55,6 +55,17 @@ def make_visualization(wins, ties, n_decks):
     fig.savefig(f'figures/{title}_{n_decks}heatmap.png', dpi=300, bbox_inches='tight')
     return fig
 
+def display_heatmaps():
+    # get data
+    regular_wins, ron_wins, regular_ties, ron_ties = get_data()
+    # make regular heatmap
+    fig_1 = make_visualization(regular_wins, regular_ties, n_decks)
+    plt.show()
+    # make ron heatmap
+    fig_2 = make_visualization(ron_wins, ron_ties)
+    plt.show
+    return
+
 
 #function to show visualization
 def main():

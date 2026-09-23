@@ -95,6 +95,12 @@ def generate_decks(n_cards: int, n_decks: int):
     )
     return decks, seed, filepath
 
+def more_decks(n):
+    print(f'Creating {n} more decks')
+    decks, seed, filepath = generate_decks(52, n)
+    print(f'{n} decks saved to {filepath}.')
+    return
+
 def main():
     # Generates 1 million decks
     n_cards = 52
