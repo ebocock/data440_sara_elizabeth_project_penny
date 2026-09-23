@@ -13,19 +13,14 @@ import matplotlib.pyplot as plt
 #function to get the data
 def get_data():
     with np.load('data/score_records/probabilities.npz') as probabilities:
-        print(probabilities)
+        regular_wins = probabilities['percent_og_wins']
+        regular_ties = probabilities['percent_og_ties']
+        ron_wins = probabilities['percent_ron_wins']
+        ron_ties = probabilities['percent_ron_ties']
         #return regular_wins, ron_wins, regular_ties, ron_ties
 
 #function to make visualization, generic 
-def make_visualization(wins, ties, n_decks):
-# Determine title
-    if wins is ron_wins:
-        title = "Ron's Variation"
-        score = 'cards'
-    else:
-        title = 'H-N Game'
-        score = 'tricks'
-
+def make_visualization(wins, ties, n_decks, title, score):
     # create the diagonal mask so the invalid games can be grey
     mask = np.eye(wins.shape[0])
 
@@ -54,22 +49,39 @@ def make_visualization(wins, ties, n_decks):
     ax.set_ylabel('Opponent Choice')
     ax.set_title(f'Probability of Win(Tie)\n{title}\nScored by {score}\n N = {n_decks}')
     plt.tight_layout()
-    fig.savefig(f'figures/{title}_{n_decks}heatmap.png', dpi=300, bbox_inches='tight')
+    # saves the heatmap to display
+    fig.savefig(f'figures/{title}heatmap.png', dpi=300, bbox_inches='tight')
+    #saves for records to see convergence
+    fig.savefig(f'figures/heatmap_record/{n_decks}_{title}.png', dpi = 300, bbox_inches = 'tight')
     return fig
+
+# wrapper functions so that we can keep the make visualizations vague but still make title changes
+# I used claude to help me make these
+def make_regular_visualization(wins, ties, n_decks):
+    title = 'H-N Game'
+    score = 'tricks'
+    return make_visualization(wins, ties, n_decks, title, score)
+
+
+def make_ron_visualization(wins, ties, n_decks):
+    title = "Ron's Variation"
+    score = 'cards'
+    return make_visualization(wins, ties, n_decks, title, score)
 
 def display_heatmaps():
     # get data
     regular_wins, ron_wins, regular_ties, ron_ties = get_data()
     # make regular heatmap
-    fig_1 = make_visualization(regular_wins, regular_ties, n_decks)
+    fig_1 = make_regular_visualization(regular_wins, regular_ties, n_decks)
     plt.show()
     # make ron heatmap
-    fig_2 = make_visualization(ron_wins, ron_ties)
+    fig_2 = make_ron_visualization(ron_wins, ron_ties)
     plt.show
     return
 
 
-#function to show visualization
+
+
 def main():
     get_data()
 
