@@ -37,10 +37,10 @@ def run_og_game(deck, mychoice, oppchoice ) -> str: #HN version of the game, sco
 
   if mytricks > opptricks: #if my trick number wins i win the game
    return "win" 
-  elif mytricks ==opptricks:
+  elif mytricks ==opptricks: # if i tie, return tie string
     return "tie"
   else:
-    return "loss"
+    return "loss" # losses arent necessarily tracked, but adding for readibility
 
 
 def run_ron_game(deck, mychoice, oppchoice) -> str: #rons version of the game, scored by won cards
@@ -60,22 +60,22 @@ def run_ron_game(deck, mychoice, oppchoice) -> str: #rons version of the game, s
       oppcards+= len(drawn) # whole pile awarded to opponennt
       drawn = ""
 
-  if mycards > oppcards: # if i win or tie i win the game
+  if mycards > oppcards: # if i have more cards i win the game
    return "win"
-  elif mycards == oppcards:
+  elif mycards == oppcards: #if we have equal number of cards we tie the gae
     return "tie"
   else:
-    return "loss"
+    return "loss" #loss string still returned for readiblity
 
 
-def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_grid, counter_grid, combos) -> None:
+def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_grid, counter_grid, combos) -> None: #plays the actual games, adds points for scores
     
-    deck_string = convert_deck(deck_array)
+    deck_string = convert_deck(deck_array) #change array to string
 
-    for mychoice in combos:
-      for oppchoice in combos:
+    for mychoice in combos: #iterate through all my card choice combinations
+      for oppchoice in combos:  #iterate through all opponenet card combinations
 
-        if mychoice != oppchoice:
+        if mychoice != oppchoice: # runs games when me and oponenent havent picked same combination
           og_outcome = run_og_game(deck_string, mychoice, oppchoice)
           ron_outcome = run_ron_game(deck_string, mychoice, oppchoice)
 
@@ -107,13 +107,13 @@ ron_tie_grid = np.zeros((8,8)) #for ron game
 counter_grid = np.zeros((8,8)) #all games
 
 
-decks,seed,filepath = generate_decks(n_cards = 52, n_decks=1000) #1000 to start with
+decks = np.load("data/decks/decks_100x52_seed_1696.npy")
 
 for deck_array in decks: #play the games for every deck
   play_n_score(deck_array,og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid, combos) 
 
-save_result_counts(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid)
-save_probabilities(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid)
+save_result_counts(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid) #save the raw counts of wins and ties
+save_probabilities(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid) #save the win porbailities
 
 
 
