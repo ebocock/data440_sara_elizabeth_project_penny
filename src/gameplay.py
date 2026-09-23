@@ -82,17 +82,17 @@ def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_
 # consulted Claude for logic/structure of below 11 lines
           m = combos.index(mychoice)
           o = combos.index(oppchoice)
-          counter_grid[m,o] += 1
+          counter_grid[o,m] += 1
 
           if og_outcome == "win":
-            og_wins_grid[m,o] += 1
+            og_wins_grid[o,m] += 1
           elif og_outcome == "tie":
-            og_ties_grid[m,o] += 1
+            og_ties_grid[o,m] += 1
 
           if ron_outcome == "win":
-            ron_wins_grid[m,o] += 1
+            ron_wins_grid[o,m] += 1
           elif ron_outcome == "tie":
-            ron_tie_grid[m,o] += 1
+            ron_tie_grid[o,m] += 1
 
     return
 
