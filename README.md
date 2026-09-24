@@ -1,2 +1,10 @@
-# data440_sara_elizabeth_project_penny
+# Project Penny : Monte-Carlo Simulation
+
+## Overview
+
+## Purpose
+
+## How-To Run Code
+
+## Findings
 
