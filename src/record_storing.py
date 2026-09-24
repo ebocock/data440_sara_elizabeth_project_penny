@@ -45,6 +45,10 @@ def save_probabilities(score_grids) -> None:
 
 #https://note.nkmk.me/en/python-numpy-load-save-savez-npy-npz/
 def get_result_counts() -> tuple:
+    
+    if not PATH_RESULT_COUNTS.exists():
+        return np.zeros((8,8)),np.zeros((8,8)),np.zeros((8,8)),np.zeros((8,8)),np.zeros((8,8))
+    
     with np.load(PATH_RESULT_COUNTS) as result_counts:
         og_wins_grid = result_counts["og_wins_grid"]
         og_ties_grid = result_counts["og_ties_grid"]
