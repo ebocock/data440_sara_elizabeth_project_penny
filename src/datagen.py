@@ -81,6 +81,10 @@ def save_decks(decks: np.ndarray,
 
 
 def generate_decks(n_cards: int, n_decks: int) -> tuple[np.ndarray, int, str]:
+    ''' 
+    This function retrieves the next seed, makes decks, and saves them,
+    returning the decks seed and filepath for easy debugging.
+    '''
     seed = get_next_seed()
 
     decks = make_decks(
@@ -96,12 +100,19 @@ def generate_decks(n_cards: int, n_decks: int) -> tuple[np.ndarray, int, str]:
     return decks, seed, filepath
 
 def more_decks(n: int) -> str:
+    '''
+    This is the function that is called on the main. It runs generate decks but includes
+    some print statements to keep the user updated.
+    '''
     print(f'Creating {n} more decks')
     decks, seed, filepath = generate_decks(52, n)
     print(f'{n} decks saved to {filepath}.')
     return filepath
 
 def main():
+    '''
+    Main used in testing this module of the code.
+    '''
     # Generates 1 million decks
     n_cards = 52
     n_decks = 100

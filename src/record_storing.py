@@ -6,6 +6,7 @@ import numpy as np
 PATH_SCORE_RECORDS = Path("data/score_records")
 PATH_RESULT_COUNTS = PATH_SCORE_RECORDS/"result_counts.npz"
 PATH_PROBABILITIES = PATH_SCORE_RECORDS/"probabilities.npz"
+PATH_DECK_COUNT = PATH_SCORE_RECORDS / "total_decks.txt"
 
 PATH_SCORE_RECORDS.mkdir(parents=True, exist_ok=True)
 
@@ -57,3 +58,60 @@ def get_result_counts() -> tuple:
         ron_ties_grid = result_counts["ron_ties_grid"]
         counter_grid = result_counts["counter_grid"]
         return og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
+
+
+# this stores the total number of cards processed
+def update_deck_count(num_decks: int) -> None:
+    '''
+    This function updates the record that contains the number of decks that has
+    been processed so far. I used chatgpt to help me make it.
+    '''
+    if PATH_DECK_COUNT.exists():
+        with open(PATH_DECK_COUNT, "r") as f:
+            total_decks = int(f.read())
+    else:
+        total_decks = 0
+
+    total_decks += num_decks
+
+    with open(PATH_DECK_COUNT, "w") as f:
+        f.write(str(total_decks))
+
+    return
+
+def get_deck_count() -> int:
+    '''
+    This function retrieves the number of decks processed so far.
+    '''
+    if not PATH_DECK_COUNT.exists():
+        return 0
+
+    with open(PATH_DECK_COUNT, "r") as f:
+        total_decks = int(f.read())
+
+    return total_decks
+
+def get_probabilities() -> tuple:
+    '''
+    Similar to get results count this function returns the most recent probabilities.
+    '''
+    if not PATH_PROBABILITIES.exists():
+        return (
+            np.zeros((8,8)),
+            np.zeros((8,8)),
+            np.zeros((8,8)),
+            np.zeros((8,8))
+        )
+
+    with np.load(PATH_PROBABILITIES) as probabilities:
+        percent_og_wins = probabilities["percent_og_wins"]
+        percent_og_ties = probabilities["percent_og_ties"]
+        percent_ron_wins = probabilities["percent_ron_wins"]
+        percent_ron_ties = probabilities["percent_ron_ties"]
+
+        return (
+            percent_og_wins,
+            percent_og_ties,
+            percent_ron_wins,
+            percent_ron_ties
+        )

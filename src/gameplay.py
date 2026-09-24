@@ -1,7 +1,7 @@
 import numpy as np 
 import random
 from src.datagen import generate_decks #import deck generation from src
-from src.record_storing import save_result_counts, save_probabilities, get_result_counts
+from src.record_storing import save_result_counts, save_probabilities, get_result_counts, update_deck_count
 
 
 def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns string
@@ -133,4 +133,5 @@ def process_added_decks(filepath):
 
   score_records = og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
   score_saver(score_records)
+  update_deck_count(len(new_decks))
   return
