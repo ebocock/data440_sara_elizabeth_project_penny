@@ -16,7 +16,7 @@ def main():
         display_heatmaps()
 
     elif first_action == '1':
-        n_decks = input('Enter the number of decks you would like to generate:')
+        n_decks = input('Enter the number of additional decks you would like to generate:')
         more_decks()
         process = input(f'You now have {n_decks} unprocessed decks.\n \
                         select 0 to process, select 1 to quit')
