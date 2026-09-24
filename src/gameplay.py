@@ -1,7 +1,7 @@
 import numpy as np 
 import random
 from datagen import generate_decks #import deck generation from src
-from record_storing import save_result_counts, save_probabilities
+from record_storing import save_result_counts, save_probabilities, get_result_counts
 
 
 def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns string
@@ -98,22 +98,45 @@ def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_
 
 combos = ["BRR", "BRB", "BBR", "BBB", "RRR","RRB","RBR","RBB"] #all possible combos, listed to record for results tracking
 
-# source consulted for below chunk: https://www.geeksforgeeks.org/python/create-a-numpy-array-filled-with-all-zeros-python/
-#below generates grid to record wins and games
-og_wins_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
-og_ties_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
-ron_wins_grid = np.zeros((8,8)) #for ron game
-ron_tie_grid = np.zeros((8,8)) #for ron game
-counter_grid = np.zeros((8,8)) #all games
 
+def fill_score_grids(decks) -> tuple:
+  # source consulted for below chunk: https://www.geeksforgeeks.org/python/create-a-numpy-array-filled-with-all-zeros-python/
+  #below generates grid to record wins and games
+  og_wins_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
+  og_ties_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
+  ron_wins_grid = np.zeros((8,8)) #for ron game
+  ron_ties_grid = np.zeros((8,8)) #for ron game
+  counter_grid = np.zeros((8,8)) #all games
 
-decks = np.load("data/decks/decks_100x52_seed_1696.npy")
+  for deck_array in decks: #play the games for every deck
+    play_n_score(deck_array,og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid, combos) 
 
-for deck_array in decks: #play the games for every deck
-  play_n_score(deck_array,og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid, combos) 
+  return og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
 
-save_result_counts(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid) #save the raw counts of wins and ties
-save_probabilities(og_wins_grid,og_ties_grid,ron_wins_grid,ron_tie_grid,counter_grid) #save the win porbailities
+def score_saver(score_grids) -> None:
+  save_result_counts(score_grids) #save the raw counts of wins and ties
+  save_probabilities(score_grids) #save the win porbailities
+  return
 
+def process_base_decks():
+  decks = np.load("data/decks/decks_100x52_seed_1696.npy")
+  score_grids=fill_score_grids(decks)
+  score_saver(score_grids)
+  return
 
+def process_added_decks(filepath):
+  
+  new_decks = np.load(filepath)
+  new_grids = fill_score_grids(new_decks)
+  old_grids = get_result_counts()
 
+  og_wins_grid = old_grids[0] +new_grids[0]
+  og_ties_grid = old_grids[1] +new_grids[1]
+  
+  ron_wins_grid = old_grids[2] +new_grids[2]
+  ron_ties_grid = old_grids[3] +new_grids[3]
+  counter_grid = old_grids[4] +new_grids[4]
+
+  score_records = og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
+  score_saver(score_records)
+  return
