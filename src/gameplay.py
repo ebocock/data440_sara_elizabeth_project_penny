@@ -118,12 +118,6 @@ def score_saver(score_grids) -> None:
   save_probabilities(score_grids) #save the win porbailities
   return
 
-def process_base_decks():
-  decks = np.load("data/decks/decks_100x52_seed_1696.npy")
-  score_grids=fill_score_grids(decks)
-  score_saver(score_grids)
-  return
-
 def process_added_decks(filepath):
   
   new_decks = np.load(filepath)
