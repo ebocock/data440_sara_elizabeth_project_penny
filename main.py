@@ -1,12 +1,17 @@
 #imports
 from src.datagen import more_decks
 from src.datavis import display_heatmaps
+from src.record_storing import PATH_RESULTS_COUNTS
+from src.gameplay import process_base_decks, process_added_decks
 
 # Process the n more decks
-def process_cards():
-    pass
-
-
+def process_cards(filepath): #needs to get fileapth form more decks()
+    
+    if not PATH_RESULT_COUNTS.exists(): # if no base scoring has been done do it here, for first runs of program
+        process_base_decks()
+    process_added_decks(filepath)
+    return
+    
 # Main
 def main():
     print('Welcome to the Project Penny Simulation')
