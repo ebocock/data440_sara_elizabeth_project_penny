@@ -1,7 +1,7 @@
 #imports
 from src.datagen import more_decks
 from src.datavis import display_heatmaps
-from src.record_storing import PATH_RESULTS_COUNTS
+#from src.record_storing import PATH_RESULTS_COUNTS
 from src.gameplay import process_added_decks
     
 # Main
@@ -14,11 +14,11 @@ def main():
 
     elif first_action == '1':
         n_decks = int(input('Enter the number of decks you would like to generate:'))
-        more_decks(n_decks)
+        filepath = more_decks(n_decks)
         process = input(f'You now have {n_decks} unprocessed decks.\n \
                         select 0 to process, select 1 to quit')
         if process == '0':
-            process_added_decks()
+            process_added_decks(filepath)
             heatmap_q = input(f'Just processed {n_decks}, input 0 to display updated heatmaps.')
             if heatmap_q == '0':
                 display_heatmaps()

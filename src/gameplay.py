@@ -1,7 +1,7 @@
 import numpy as np 
 import random
-from datagen import generate_decks #import deck generation from src
-from record_storing import save_result_counts, save_probabilities, get_result_counts
+from src.datagen import generate_decks #import deck generation from src
+from src.record_storing import save_result_counts, save_probabilities, get_result_counts
 
 
 def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns string
