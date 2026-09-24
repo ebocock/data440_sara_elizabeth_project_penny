@@ -2,15 +2,7 @@
 from src.datagen import more_decks
 from src.datavis import display_heatmaps
 from src.record_storing import PATH_RESULTS_COUNTS
-from src.gameplay import process_base_decks, process_added_decks
-
-# Process the n more decks
-def process_cards(filepath): #needs to get fileapth form more decks()
-    
-    if not PATH_RESULT_COUNTS.exists(): # if no base scoring has been done do it here, for first runs of program
-        process_base_decks()
-    process_added_decks(filepath)
-    return
+from src.gameplay import process_added_decks
     
 # Main
 def main():
@@ -26,7 +18,7 @@ def main():
         process = input(f'You now have {n_decks} unprocessed decks.\n \
                         select 0 to process, select 1 to quit')
         if process == '0':
-            process_cards()
+            process_added_decks()
             heatmap_q = input(f'Just processed {n_decks}, input 0 to display updated heatmaps.')
             if heatmap_q == '0':
                 display_heatmaps()
