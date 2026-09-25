@@ -8,30 +8,6 @@ def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns st
   deck_string = "".join(deck_array.astype(str))
   return deck_string #return string
 
-def run_og_game(deck, mychoice, oppchoice ) -> str: #HN version of the game, scores by tricks 
-  mytricks=0 #tracks the number of tricks ive won
-  opptricks=0 # tracks the number of tricks opponent has won
-
-  drawn="" #stores all the drawn cards
-
-  for card in deck:
-    drawn += card #add thw next card to drawn pile
-
-    if drawn.endswith(mychoice): #if drawn crd pile ended w my sequence
-      mytricks+=1 #add a point for winning
-      drawn = "" #reset drawn pile
-
-    elif drawn.endswith(oppchoice):  #same as above but for opponent
-      opptricks+=1
-      drawn = ""
-
-  if mytricks > opptricks: #if my trick number wins i win the game
-   return "win" 
-  elif mytricks ==opptricks: # if i tie, return tie string
-    return "tie"
-  else:
-    return "loss" # losses arent necessarily tracked, but adding for readibility
-
 
 def run_game(deck, mychoice, oppchoice) -> str: #rons version of the game, scored by won cards
   my_tricks = 0 #tracks the number of tricks ive won
@@ -79,16 +55,14 @@ def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_
     
     deck_string = convert_deck(deck_array) #change array to string
 
-    for mychoice in combos: #iterate through all my card choice combinations
-      for oppchoice in combos:  #iterate through all opponenet card combinations
+    for m, mychoice in enumerate(combos): #iterate through all my card choice combinations
+      for o, oppchoice in enumerate(combos):  #iterate through all opponenet card combinations
 
         if mychoice != oppchoice: # runs games when me and oponenent havent picked same combination
-          og_outcome = run_og_game(deck_string, mychoice, oppchoice)
-          ron_outcome = run_ron_game(deck_string, mychoice, oppchoice)
+          og_outcome, ron_outcome = run_game(deck_string, mychoice, oppchoice)
 
-# consulted Claude for logic/structure of below 11 lines
-          m = combos.index(mychoice)
-          o = combos.index(oppchoice)
+# consulted chatgpt for logic/structure of below 11 lines
+
           counter_grid[o,m] += 1
 
           if og_outcome == "win":
@@ -103,8 +77,9 @@ def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_
 
     return
 
-combos = ["BRR", "BRB", "BBR", "BBB", "RRR","RRB","RBR","RBB"] #all possible combos, listed to record for results tracking
-
+# combos = ['BBB', 'BBR', 'BRB', 'BRR', 'RBB', 'RBR', 'RRB', 'RRR']
+# above is a human-readable version of the below combos (0s mean black, 1s mean red)
+combos = ['000', '001', '010', '011', '100', '101', '110', '111']
 
 def fill_score_grids(decks) -> tuple:
   # source consulted for below chunk: https://www.geeksforgeeks.org/python/create-a-numpy-array-filled-with-all-zeros-python/
