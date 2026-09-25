@@ -44,6 +44,9 @@ def make_visualization(wins: np.ndarray, ties: np.ndarray, n_decks: int, title: 
     ax.set_xlabel('My Choice')
     ax.set_ylabel('Opponent Choice')
     ax.set_title(f'Probability of Win(Tie)\n{title}\nScored by {score}\n N = {n_decks}')
+    choices = ['BBB', 'BBR', 'BRB', 'BRR', 'RBB', 'RBR', 'RRB', 'RRR']
+    ax.set_xticklabels(choices)
+    ax.set_yticklabels(choices, rotation=0)
     plt.tight_layout()
     # saves the heatmap to display
     fig.savefig(f'figures/{title}heatmap.png', dpi=300, bbox_inches='tight')
