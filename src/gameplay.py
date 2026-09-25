@@ -5,17 +5,7 @@ from src.record_storing import save_result_counts, save_probabilities, get_resul
 
 
 def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns string
-  deck_string = "" 
-
-  for card in deck_array: #convert to string card by card ie character by character
-
-    if card == 1: #1s are changed to red
-      color = "R"
-    else:
-      color = "B" #0s are changed to black
-
-    deck_string += color #add converted card to strinf
-
+  deck_string = "".join(deck_array.astype(str))
   return deck_string #return string
 
 def run_og_game(deck, mychoice, oppchoice ) -> str: #HN version of the game, scores by tricks 
@@ -43,29 +33,46 @@ def run_og_game(deck, mychoice, oppchoice ) -> str: #HN version of the game, sco
     return "loss" # losses arent necessarily tracked, but adding for readibility
 
 
-def run_ron_game(deck, mychoice, oppchoice) -> str: #rons version of the game, scored by won cards
-  mycards =0 #tracks the number of tricks ive won
-  oppcards=0 # tracks the number of tricks opponent has won
+def run_game(deck, mychoice, oppchoice) -> str: #rons version of the game, scored by won cards
+  my_tricks = 0 #tracks the number of tricks ive won
+  my_cards = 0 # tracks cards
+  opp_tricks = 0 # tracks the number of tricks opponent has won
+  opp_cards = 0 #tracks cards
 
-  drawn="" #stores all the drawn cards
+  startidx = 0
+  while True:
 
-  for card in deck:
-    drawn += card #add the next card to drawn pile
+    myidx  = deck.find(mychoice, startidx)
+    oppidx = deck.find(oppchoice, startidx)
 
-    if drawn.endswith(mychoice): #if drawn crd pile ended w my sequence
-      mycards += len(drawn)  #whole pile awared to me
-      drawn = "" # reset drawn pile
+    if myidx == -1 and oppidx == -1:
+      break
 
-    elif drawn.endswith(oppchoice): 
-      oppcards+= len(drawn) # whole pile awarded to opponennt
-      drawn = ""
+    if oppidx == -1 or (myidx != -1 and myidx < oppidx):
+      my_tricks += 1
+      my_cards += (myidx - startidx +3)
+      startidx = myidx+3
 
-  if mycards > oppcards: # if i have more cards i win the game
-   return "win"
-  elif mycards == oppcards: #if we have equal number of cards we tie the gae
-    return "tie"
+    else:
+      opp_tricks += 1
+      opp_cards += (oppidx - startidx +3)
+      startidx = oppidx+3
+
+  if my_cards > opp_cards:
+    ron_result = "win"
+  elif my_cards == opp_cards:
+    ron_result = "tie"
   else:
-    return "loss" #loss string still returned for readiblity
+    ron_result = "loss"
+
+  if my_tricks > opp_tricks:
+    reg_result = "win"
+  elif my_tricks == opp_tricks:
+    reg_result = "tie"
+  else:
+    reg_result = "loss"
+
+  return reg_result, ron_result
 
 
 def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_grid, counter_grid, combos) -> None: #plays the actual games, adds points for scores
