@@ -44,7 +44,7 @@ def make_visualization(wins: np.ndarray, ties: np.ndarray, n_decks: int, title: 
     ax.set_xlabel('My Choice')
     ax.set_ylabel('Opponent Choice')
     ax.set_title(f'Probability of Win(Tie)\n{title}\nScored by {score}\n N = {n_decks}')
-    choices = ['BBB', 'BBR', 'BRB', 'BRR', 'RBB', 'RBR', 'RRB', 'RRR']
+    choices = ['BBB', 'BBR', 'BRB', 'BRR', 'RBB', 'RBR', 'RRB', 'RRR'] # this sis the same as the order in gameplay
     ax.set_xticklabels(choices)
     ax.set_yticklabels(choices, rotation=0)
     plt.tight_layout()
@@ -85,8 +85,8 @@ def display_heatmaps()-> None:
     n_decks = get_deck_count()
     # make regular heatmap
     fig_1 = make_regular_visualization(regular_wins, regular_ties, n_decks)
-    plt.show()
+    #plt.show()
     # make ron heatmap
     fig_2 = make_ron_visualization(ron_wins, ron_ties, n_decks)
-    plt.show
+    plt.show()
     return

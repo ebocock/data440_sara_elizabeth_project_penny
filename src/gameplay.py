@@ -5,25 +5,33 @@ from src.record_storing import save_result_counts, save_probabilities, get_resul
 
 
 def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns string
+  '''
+  Turns the deck array into a string
+  '''
   deck_string = "".join(deck_array.astype(str))
   return deck_string #return string
 
 
 def run_game(deck, mychoice, oppchoice) -> str: #rons version of the game, scored by won cards
+  '''
+  Runs a playthough of one game (one deck of cards)
+  '''
   my_tricks = 0 #tracks the number of tricks ive won
   my_cards = 0 # tracks cards
   opp_tricks = 0 # tracks the number of tricks opponent has won
   opp_cards = 0 #tracks cards
 
   startidx = 0
+
   while True:
 
     myidx  = deck.find(mychoice, startidx)
     oppidx = deck.find(oppchoice, startidx)
-
+    # Break loop when both find no more of the combo
     if myidx == -1 and oppidx == -1:
       break
-
+    
+    #update score tracking
     if oppidx == -1 or (myidx != -1 and myidx < oppidx):
       my_tricks += 1
       my_cards += (myidx - startidx +3)
@@ -33,7 +41,8 @@ def run_game(deck, mychoice, oppchoice) -> str: #rons version of the game, score
       opp_tricks += 1
       opp_cards += (oppidx - startidx +3)
       startidx = oppidx+3
-
+  
+  # results
   if my_cards > opp_cards:
     ron_result = "win"
   elif my_cards == opp_cards:
@@ -52,7 +61,9 @@ def run_game(deck, mychoice, oppchoice) -> str: #rons version of the game, score
 
 
 def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_grid, counter_grid, combos) -> None: #plays the actual games, adds points for scores
-    
+    '''
+    This actually plays the games for the new set of decks
+    '''
     deck_string = convert_deck(deck_array) #change array to string
 
     for m, mychoice in enumerate(combos): #iterate through all my card choice combinations

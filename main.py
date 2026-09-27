@@ -7,19 +7,19 @@ from src.gameplay import process_added_decks
 # Main
 def main():
     print('Welcome to the Project Penny Simulation')
-    first_action = input('Type 0 to display the most up-to-date heatmaps,\n type\n' \
-    'Type 1 to generate more decks.')
+    first_action = input('\t Type 0 to display the most up-to-date heatmaps,\n' \
+    '\t Type 1 to generate more decks:')
     if first_action == '0':
         display_heatmaps()
 
     elif first_action == '1':
-        n_decks = int(input('Enter the number of decks you would like to generate:'))
+        n_decks = int(input('\t Enter the number of decks you would like to generate: '))
         filepath = more_decks(n_decks)
-        process = input(f'You now have {n_decks} unprocessed decks.\n \
-                        select 0 to process, select 1 to quit')
+        process = input(f'\t You now have {n_decks} unprocessed decks.\n' \
+                        '\t select 0 to process: ')
         if process == '0':
             process_added_decks(filepath)
-            heatmap_q = input(f'Just processed {n_decks}, input 0 to display updated heatmaps.')
+            heatmap_q = input(f'\t Just processed {n_decks}, input 0 to display updated heatmaps: ')
             if heatmap_q == '0':
                 display_heatmaps()
 

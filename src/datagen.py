@@ -104,9 +104,9 @@ def more_decks(n: int) -> str:
     This is the function that is called on the main. It runs generate decks but includes
     some print statements to keep the user updated.
     '''
-    print(f'Creating {n} more decks')
+    print(f'\t ...Creating {n} more decks')
     decks, seed, filepath = generate_decks(52, n)
-    print(f'{n} decks saved to {filepath}.')
+    print(f'\t ...{n} decks saved to {filepath}.')
     return filepath
 
 def main():
