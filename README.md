@@ -21,4 +21,15 @@ This code is separated into four key modules:
 
 The main.py prompts the user to select between generating and scoring more decks and displaying the updated results heatmaps.
 ## Findings
+Both of these games have a second-player advantage. This means that faced with the first player's choice, the second player can always choose a strategty that will make them more likely to win.
+### H-N Game
+In the H-N game, the optimal strategy for the first player is to select either BRB or RBR because those have the lowest max win probabiltiy for the second player, assuming that player is rational and acting optimally (80% win prob for player 2, 8% tie prob, so a 12% win prob for player 1).
 
+The optimal choice for the second player is to select whichever strategy gives them the highest win probability based on their opponent's choice. Using the above optimal strategies, if the first player selects BRB, the second player should select BBR, which gives them an 80% chance of winning. If the first player selects RBR then the second player should select RRB, wich also gives them an 80% chance of winning.
+
+### Ron's Version
+In the Ron version of the game, since it is scored based on the number of cards rhater than tricks the probability of tie is greatly decreased, although the significant second player advantage remains.
+
+Playing optimally, the first player will still select either BRB or RBR, but there is a change in the probabilities. Assuming the second player is rational and playing optimally the proability of winning for player 1 falls to 7%, with a 1% tie probability and a 92% win probability for player two.
+
+The optimal strategy for the second player is to select whichever strategy gives them the highest probability of winning. Faced with optimal strategies for the first player, the second player should select BBR if the first player selects RBR and RRB if the first player selects BRB.
