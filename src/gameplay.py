@@ -42,7 +42,7 @@ def run_game(deck: str, mychoice: str, oppchoice:str) -> str: #rons version of t
       opp_cards += (oppidx - startidx +3)
       startidx = oppidx+3
   
-  # results
+  # results, determines if i win, lose, tie
   if my_cards > opp_cards:
     ron_result = "win"
   elif my_cards == opp_cards:
@@ -67,12 +67,12 @@ def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_
     deck_string = convert_deck(deck_array) #change array to string
 
     for m, mychoice in enumerate(combos): #iterate through all my card choice combinations
-      for o, oppchoice in enumerate(combos):  #iterate through all opponenet card combinations
+      for o, oppchoice in enumerate(combos):  #iterate through all opponnent card combinations
 
         if mychoice != oppchoice: # runs games when me and oponenent havent picked same combination
           og_outcome, ron_outcome = run_game(deck_string, mychoice, oppchoice)
 
-# consulted chatgpt for logic/structure of below 11 lines
+# consulted chatgpt for logic/structure of below 11 lines, populates grids
 
           counter_grid[o,m] += 1
 
@@ -92,9 +92,14 @@ def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_
 # above is a human-readable version of the below combos (0s mean black, 1s mean red)
 combos = ['000', '001', '010', '011', '100', '101', '110', '111']
 
-def fill_score_grids(decks) -> tuple:
+def fill_score_grids(decks) -> tuple[array, array, array, array, array]:
   # source consulted for below chunk: https://www.geeksforgeeks.org/python/create-a-numpy-array-filled-with-all-zeros-python/
   #below generates grid to record wins and games
+
+  '''
+  Creates empty grids, populates them by calling play n score funct
+  '''
+  
   og_wins_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
   og_ties_grid = np.zeros((8,8)) # for og game, 8 is for 8 total combination
   ron_wins_grid = np.zeros((8,8)) #for ron game
@@ -106,18 +111,16 @@ def fill_score_grids(decks) -> tuple:
 
   return og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
 
-def score_saver(score_grids) -> None:
-  save_result_counts(score_grids) #save the raw counts of wins and ties
-  save_probabilities(score_grids) #save the win porbailities
-  return
+def process_added_decks(filepath: Path) -> None:
+  '''
+  Combines old and new results by adding the results together
+  '''
 
-def process_added_decks(filepath):
-  
   new_decks = np.load(filepath)
   new_grids = fill_score_grids(new_decks)
   old_grids = get_result_counts()
 
-  og_wins_grid = old_grids[0] +new_grids[0]
+  og_wins_grid = old_grids[0] +new_grids[0] 
   og_ties_grid = old_grids[1] +new_grids[1]
   
   ron_wins_grid = old_grids[2] +new_grids[2]
@@ -125,6 +128,9 @@ def process_added_decks(filepath):
   counter_grid = old_grids[4] +new_grids[4]
 
   score_grids = og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
-  score_saver(score_grids)
+  
+  save_result_counts(score_grids) #save the raw counts of wins and ties
+  save_probabilities(score_grids) #save the win porbailities
+
   update_deck_count(len(new_decks))
   return
