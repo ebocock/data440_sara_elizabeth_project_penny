@@ -24,12 +24,13 @@ def make_visualization(wins: np.ndarray, ties: np.ndarray, n_decks: int, title: 
     # Create labels wtih win prob (tie prob)
     labels = np.empty(wins.shape, dtype=object)
 
+    # iterate through and make the labels
     for i in range(wins.shape[0]):
         for j in range(wins.shape[1]):
             labels[i, j] = f"{wins[i, j]:.0f} ({ties[i, j]:.0f})"
 
 
-
+    # just creating the figures here, making adjustmernts to defaults for readability
     fig, ax = plt.subplots()
     sns.heatmap(wins,
             mask=mask,
