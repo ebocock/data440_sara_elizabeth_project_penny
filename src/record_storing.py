@@ -53,7 +53,7 @@ def save_probabilities(score_grids: tuple) -> None:
     return
 
 #https://note.nkmk.me/en/python-numpy-load-save-savez-npy-npz/
-def get_result_counts() -> tuple[array, array, array, array, array]:
+def get_result_counts() -> tuple:
 
     '''
     This function loads the existing result counts
