@@ -93,7 +93,7 @@ def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_
 # above is a human-readable version of the below combos (0s mean black, 1s mean red)
 combos = ['000', '001', '010', '011', '100', '101', '110', '111']
 
-def fill_score_grids(decks) -> tuple:
+def fill_score_grids(decks) -> tuple[ndarray, ndarray, ndarray, ndarray, ndarray]:
   # source consulted for below chunk: https://www.geeksforgeeks.org/python/create-a-numpy-array-filled-with-all-zeros-python/
   #below generates grid to record wins and games
 
