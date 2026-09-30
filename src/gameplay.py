@@ -124,7 +124,7 @@ def process_added_decks(filepath):
   ron_ties_grid = old_grids[3] +new_grids[3]
   counter_grid = old_grids[4] +new_grids[4]
 
-  score_records = og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
-  score_saver(score_records)
+  score_grids = og_wins_grid,og_ties_grid,ron_wins_grid,ron_ties_grid,counter_grid
+  score_saver(score_grids)
   update_deck_count(len(new_decks))
   return
