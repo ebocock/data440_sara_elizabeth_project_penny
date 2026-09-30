@@ -19,14 +19,15 @@ def make_decks(seed: int,
     rng = np.random.default_rng(seed)
     num_each_card = n_cards // 2
 
+    #initialize empty placeholder
     decks = np.empty((n_decks, n_cards), dtype = np.int8)
-
+    # add the cards
     for i in range(n_decks):
         deck = np.concatenate([
             np.zeros(num_each_card, dtype = np.int8),
             np.ones(num_each_card, dtype = np.int8)
         ])
-        rng.shuffle(deck)
+        rng.shuffle(deck) #shuffles
 
         decks[i] = deck
     
@@ -68,8 +69,9 @@ def save_decks(decks: np.ndarray,
     '''
     Saves all decks from one simulation call to one file.
     '''
+    #gets the place to save
     PATH_DECKS.mkdir(parents=True, exist_ok=True)
-
+    # gather info for filename
     n_decks = decks.shape[0]
     n_cards = decks.shape[1]
 
@@ -85,14 +87,15 @@ def generate_decks(n_cards: int, n_decks: int) -> tuple[np.ndarray, int, str]:
     This function retrieves the next seed, makes decks, and saves them,
     returning the decks seed and filepath for easy debugging.
     '''
+    # get random seed
     seed = get_next_seed()
-
+    # makes the decks
     decks = make_decks(
         seed = seed,
         n_decks = n_decks,
         n_cards = n_cards
     )
-
+    # saves
     filepath = save_decks(
         decks = decks,
         seed = seed

@@ -4,7 +4,7 @@ from src.datagen import generate_decks #import deck generation from src
 from src.record_storing import save_result_counts, save_probabilities, get_result_counts, update_deck_count
 
 
-def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns string
+def convert_deck(deck_array: np.ndarray) -> str: #makes array of 1s,0s, a string, returns string
   '''
   Turns the deck array into a string
   '''
@@ -12,7 +12,7 @@ def convert_deck(deck_array) -> str: #makes array of 1s,0s, a string, returns st
   return deck_string #return string
 
 
-def run_game(deck, mychoice, oppchoice) -> str: #rons version of the game, scored by won cards
+def run_game(deck: str, mychoice: str, oppchoice:str) -> str: #rons version of the game, scored by won cards
   '''
   Runs a playthough of one game (one deck of cards)
   '''
