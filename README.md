@@ -32,4 +32,7 @@ In the Ron version of the game, since it is scored based on the number of cards 
 
 Playing optimally, the first player will still select either BRB or RBR, but there is a change in the probabilities. Assuming the second player is rational and playing optimally the proability of winning for player 1 falls to 7%, with a 1% tie probability and a 92% win probability for player two.
 
-The optimal strategy for the second player is to select whichever strategy gives them the highest probability of winning. Faced with optimal strategies for the first player, the second player should select BBR if the first player selects RBR and RRB if the first player selects BRB.
+The optimal strategy for the second player is to select whichever strategy gives them the highest probability of winning. Faced with optimal strategies for the first player, the second player should select BBR if the first player selects RBR and RRB if the first player selects BRB. 
+
+
+This means that there is a difference in the optimal strategy for the second player based on whether the game is scored by tricks or by cards
