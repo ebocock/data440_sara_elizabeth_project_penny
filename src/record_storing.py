@@ -102,7 +102,7 @@ def get_deck_count() -> int:
 
     return total_decks
 
-def get_probabilities() -> tuple[array, array, array, array]:
+def get_probabilities() -> tuple:
     '''
     Similar to get results count this function returns the most recent probabilities.
     '''
