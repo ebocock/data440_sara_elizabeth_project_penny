@@ -61,7 +61,7 @@ def run_game(deck: str, mychoice: str, oppchoice:str) -> str: #rons version of t
   return reg_result, ron_result
 
 
-def play_n_score(deck_array, og_wins_grid, og_ties_grid, ron_wins_grid, ron_tie_grid, counter_grid, combos) -> None: #plays the actual games, adds points for scores
+def play_n_score(deck_array: np.ndarray, og_wins_grid: np.ndarray, og_ties_grid: np.ndarray, ron_wins_grid:np.ndarray, ron_tie_grid:np.ndarray, counter_grid:np.ndarray, combos:list) -> None: #plays the actual games, adds points for scores
     '''
     This actually plays the games for the new set of decks
     '''
